@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native';
+import { View} from 'react-native';
 import React from 'react';
-import Homescreen from './screens/Homescreen';
+import Navigation from './navigation';
 
 const App = () => {
   return (
-    <View>
-      <Homescreen />
+    <View style={{flex: 1}}>
+      <Navigation />
     </View>
   );
 };
