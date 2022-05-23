@@ -8,6 +8,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Discover from '../screens/discover/index';
 import Profile from '../screens/profile';
+import Inbox from '../screens/inbox/index';
+import Upload from '../screens/upload/index';
 
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +50,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Upload"
-        component={Home}
+        component={Upload}
         options={{
           tabBarIcon: () => (
             <Image
@@ -61,7 +63,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Inbox"
-        component={Home}
+        component={Inbox}
         options={{
           tabBarIcon: () => (
             <Entypo
