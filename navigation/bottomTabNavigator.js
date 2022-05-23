@@ -7,6 +7,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Discover from '../screens/discover/index';
+import Profile from '../screens/profile';
 
 
 const Tab = createBottomTabNavigator();
@@ -73,7 +74,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarIcon: () => (
             <Entypo name={'user'} size={IconSize.MEDIUM} color={Colors.WHITE} />
