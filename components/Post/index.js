@@ -13,6 +13,7 @@ import VideoPlayer from 'react-native-video';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { Colors, IconSize, FontSize } from '../../constants/Theme';
 
 const {height} = Dimensions.get('screen');
 
@@ -63,28 +64,28 @@ const VideoPlayers = (props) => {
           </View>
 
           <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
-            <Entypo name="heart" color={isLiked ? '#FE2C55' : 'white'} size={40} />
+            <Entypo name="heart" color={isLiked ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
             <Text style={styles.statsLabel}>{post?.likes}</Text>
           </TouchableOpacity>
 
           <View style={styles.iconContainer}>
-            <FontAwesome name="commenting" color={'white'} size={40} />
+            <FontAwesome name="commenting" color={Colors.WHITE} size={IconSize.LARGE} />
             <Text style={styles.statsLabel}>{post?.comments}</Text>
           </View>
 
           <View style={styles.iconContainer}>
-            <Fontisto name="share-a" color={'white'} size={30} />
+            <Fontisto name="share-a" color={Colors.WHITE} size={IconSize.MEDIUM} />
             <Text style={styles.statsLabel}>{post?.shares}</Text>
           </View>
         </View>
 
         <View style={styles.bottomContainer}>
           <View>
-            <Text style={styles.handle}>@{post.user.username}</Text>
+            <Text style={styles.handle}>{`@${post.user.username}`}</Text>
             <Text style={styles.description}>{post?.description}</Text>
 
             <View style={styles.songRow}>
-              <Entypo name="beamed-note" size={25} color={'white'} />
+              <Entypo name="beamed-note" size={IconSize.SMALL} color={Colors.WHITE} />
               <Text style={styles.songName}>{post?.songName}</Text>
             </View>
           </View>
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
   },
   bottomText: {
-    fontSize: 20,
-    color: 'white',
+    fontSize: FontSize.MEDIUM,
+    color: Colors.WHITE,
   },
   bottomContainer: {
     padding: 15,
@@ -139,14 +140,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   handle: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.WHITE,
+    fontSize: FontSize.SMALL,
     fontWeight: '600',
     marginBottom: 10,
   },
   description: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.WHITE,
+    fontSize: FontSize.SMALL,
     fontWeight: '300',
     marginBottom: 15,
   },
@@ -155,8 +156,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   songName: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.WHITE,
+    fontSize: FontSize.SMALL,
     marginLeft: 5,
   },
   songImage: {
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     borderWidth: 2,
-    borderColor: 'grey',
+    borderColor: Colors.GREY,
   },
   rightContainer: {
     alignSelf: 'flex-end',
@@ -177,14 +178,14 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: Colors.WHITE,
   },
   iconContainer: {
     alignItems: 'center',
   },
   statsLabel: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.WHITE,
+    fontSize: FontSize.SMALL,
     fontWeight: '600',
     marginTop: 5,
   },
