@@ -16,4 +16,4 @@ export const FontSize = {
     SMALL : 16,
     MEDIUM : 20,
     LARGE: 30,
-}
+};

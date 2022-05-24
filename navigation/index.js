@@ -4,6 +4,7 @@ import React from 'react';
 import BottomTabNavigator from './bottomTabNavigator';
 import EditProfile from '../screens/profile/EditProfile';
 import Setting from '../screens/setting/index';
+import Theme from '../components/Theme/index';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const RootNavigation = () => {
                 <Stack.Screen name='Home' component={BottomTabNavigator} />
                 <Stack.Screen name='EditProfile' component={EditProfile} />
                 <Stack.Screen name='Setting' component={Setting} />
+                <Stack.Screen name='Theme' component={Theme} />
             </Stack.Navigator>
         </NavigationContainer>
     )

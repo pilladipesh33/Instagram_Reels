@@ -6,13 +6,16 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import { ThemeContext } from '../../context/Themes/index';
 
 const Profile = ({navigation}) => {
+  const {theme} = useContext(ThemeContext);
+
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
@@ -23,15 +26,15 @@ const Profile = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
-        <Text style={styles.name}>@daviddobrik</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>@daviddobrik</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Feather
             name="settings"
             size={IconSize.SMALL}
             color={Colors.BLACK}
-            style={{marginRight: 10, marginTop: 20}}
+            style={[styles[`icon_${theme}`],{marginRight: 10, marginTop: 20}]}
           />
         </TouchableOpacity>
       </View>
@@ -42,23 +45,23 @@ const Profile = ({navigation}) => {
           }}
           style={styles.profilePicture}
         />
-        <Text style={styles.name}>David Dobrik</Text>
+        <Text style={[styles.name,styles[`text_${theme}`]]}>David Dobrik</Text>
       </View>
 
       <View style={styles.topRow}>
-        <Text style={styles.detail}>114.2K</Text>
-        <Text style={styles.detail}>1.6M</Text>
+        <Text style={[styles.detail, styles[`text_${theme}`]]}>114.2K</Text>
+        <Text style={[styles.detail, styles[`text_${theme}`]]}>1.6M</Text>
       </View>
       <View style={styles.topRow}>
-        <Text style={{color: Colors.GREY}}>Followers</Text>
-        <Text style={{color: Colors.GREY}}>Likes</Text>
+        <Text style={[styles[`text_${theme}`],{color: Colors.GREY}]}>Followers</Text>
+        <Text style={[styles[`text_${theme}`],{color: Colors.GREY}]}>Likes</Text>
       </View>
 
       <View style={styles.EditButtonContainer}>
         <TouchableOpacity
           style={styles.editButton}
           onPress={navigateToEditProfile}>
-          <Text style={styles.editText}>Edit profile</Text>
+          <Text style={[styles.editText, styles[`text_${theme}`]]}>Edit profile</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -67,6 +70,7 @@ const Profile = ({navigation}) => {
           <FontAwesome
             name={isBookmark ? 'bookmark-o' : 'bookmark'}
             size={20}
+            style={styles[`icon_${theme}`]}
           />
         </TouchableOpacity>
       </View>
@@ -82,12 +86,12 @@ const Profile = ({navigation}) => {
           <MaterialCommunityIcon
             name="format-columns"
             size={IconSize.SMALL}
-            color={Colors.BLACK}
+            style={styles[`icon_${theme}`]}
           />
           <MaterialCommunityIcon
             name="cards-heart-outline"
             size={IconSize.SMALL}
-            color={Colors.BLACK}
+            style={styles[`icon_${theme}`]}
           />
         </View>
         <View style={styles.line} />
@@ -99,6 +103,26 @@ const Profile = ({navigation}) => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  container_light: {
+    backgroundColor: 'white',
+    height: '100%',
+  },
+  container_dark: {
+    backgroundColor: '#413F42',
+    height: '100%',
+  },
+  icon_light: {
+    color: Colors.BLACK,
+  },
+  icon_dark: {
+    color: Colors.WHITE,
+  },
+  text_light: {
+    color: Colors.BLACK,
+  },
+  text_dark: {
+    color: Colors.WHITE,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
