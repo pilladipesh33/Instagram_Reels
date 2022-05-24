@@ -9,26 +9,32 @@ import {
 import React, {useState} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialCommunityIcon  from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
 const Profile = ({navigation}) => {
-
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
 
-  const [isBookmark, setIsBookmark] =  useState(true);
+  const [isBookmark, setIsBookmark] = useState(true);
   const toggleBookmark = () => {
     setIsBookmark(!isBookmark);
-  }
+  };
 
   return (
     <SafeAreaView>
-        <View style={styles.header}>
-      <Text style={styles.name}>@daviddobrik</Text>
-      <Feather name='settings' size={IconSize.SMALL} color={Colors.BLACK} style={{marginRight: 10, marginTop: 20}}/>
-        </View>
+      <View style={styles.header}>
+        <Text style={styles.name}>@daviddobrik</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
+          <Feather
+            name="settings"
+            size={IconSize.SMALL}
+            color={Colors.BLACK}
+            style={{marginRight: 10, marginTop: 20}}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.profileContainer}>
         <Image
           source={{
@@ -49,22 +55,42 @@ const Profile = ({navigation}) => {
       </View>
 
       <View style={styles.EditButtonContainer}>
-        <TouchableOpacity style={styles.editButton} onPress={navigateToEditProfile}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={navigateToEditProfile}>
           <Text style={styles.editText}>Edit profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.editButton, {marginLeft: 10}]} onPress={toggleBookmark}>
-          <FontAwesome name={isBookmark ? 'bookmark-o' : 'bookmark'} size={20} />
+        <TouchableOpacity
+          style={[styles.editButton, {marginLeft: 10}]}
+          onPress={toggleBookmark}>
+          <FontAwesome
+            name={isBookmark ? 'bookmark-o' : 'bookmark'}
+            size={20}
+          />
         </TouchableOpacity>
       </View>
 
       <View>
-          <View style={styles.line}/>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10}}>
-              <MaterialCommunityIcon name='format-columns' size={IconSize.SMALL} color={Colors.BLACK} />
-              <MaterialCommunityIcon name='cards-heart-outline' size={IconSize.SMALL} color={Colors.BLACK} />
-          </View>
-          <View style={styles.line} />
+        <View style={styles.line} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            paddingTop: 10,
+          }}>
+          <MaterialCommunityIcon
+            name="format-columns"
+            size={IconSize.SMALL}
+            color={Colors.BLACK}
+          />
+          <MaterialCommunityIcon
+            name="cards-heart-outline"
+            size={IconSize.SMALL}
+            color={Colors.BLACK}
+          />
+        </View>
+        <View style={styles.line} />
       </View>
     </SafeAreaView>
   );
@@ -73,11 +99,11 @@ const Profile = ({navigation}) => {
 export default Profile;
 
 const styles = StyleSheet.create({
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   profileContainer: {
     alignItems: 'center',
     marginTop: 30,
@@ -121,11 +147,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   line: {
-      width: '100%',
-      borderWidth: 0.5,
-      borderColor: Colors.GREY,
-      opacity: 0.5,
-      marginTop: 15
+    width: '100%',
+    borderWidth: 0.5,
+    borderColor: Colors.GREY,
+    opacity: 0.5,
+    marginTop: 15,
   },
-
 });
