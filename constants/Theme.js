@@ -3,6 +3,7 @@ export const Colors = {
     RED: '#FE2C55',
     GREY : 'grey',
     BLACK : '#000',
+    DARK_GREY : '#333333',
 };
 
 export const IconSize = {

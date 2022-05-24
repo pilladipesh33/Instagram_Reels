@@ -6,13 +6,23 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon  from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+
+  const navigateToEditProfile = () => {
+    navigation.navigate('EditProfile');
+  };
+
+  const [isBookmark, setIsBookmark] =  useState(true);
+  const toggleBookmark = () => {
+    setIsBookmark(!isBookmark);
+  }
+
   return (
     <SafeAreaView>
         <View style={styles.header}>
@@ -39,11 +49,12 @@ const Profile = () => {
       </View>
 
       <View style={styles.EditButtonContainer}>
-        <TouchableOpacity style={styles.editButton}>
+        <TouchableOpacity style={styles.editButton} onPress={navigateToEditProfile}>
           <Text style={styles.editText}>Edit profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.editButton, {marginLeft: 10}]}>
-          <FontAwesome name="bookmark-o" size={20} />
+
+        <TouchableOpacity style={[styles.editButton, {marginLeft: 10}]} onPress={toggleBookmark}>
+          <FontAwesome name={isBookmark ? 'bookmark-o' : 'bookmark'} size={20} />
         </TouchableOpacity>
       </View>
 
