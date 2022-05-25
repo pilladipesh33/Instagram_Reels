@@ -6,6 +6,8 @@ import {
   LOGIN_REQUEST,
 } from '../action/Constant';
 import {storage} from '../../storage';
+import firestore from '@react-native-firebase/firestore';
+
 
 export const loginRequest = () => {
   return {
@@ -83,6 +85,23 @@ export const forgotPassword = (email) => {
         }).catch(function (e) {
           console.log(e)
         });
+};
+
+export const registration = async (email, password, fullName, image, callBack) => {
+  try {
+    const userData = await auth().createUserWithEmailAndPassword(
+      email,
+      password
+    );
+    await firebase.firestore().collection('users').doc(userData.user.uid).set({
+      FullName: fullName,
+      Email: email,
+    });
+
+    callBack();
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
 

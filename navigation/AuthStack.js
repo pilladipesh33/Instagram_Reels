@@ -8,14 +8,14 @@ const Stack = createStackNavigator();
 
 const AuthStack = () => {
     return (
-        <NavigationContainer
-        screenOptions={{
-            useNativeDriver: true,
-            headerShown: false,
-          }}
-          initialRouteName={'Login'}
-          detachInactiveScreens={false}>
-            <Stack.Navigator>
+        <NavigationContainer>
+            <Stack.Navigator
+            screenOptions={{
+                useNativeDriver: true,
+                headerShown: false,
+              }}
+              initialRouteName={'Login'}
+              detachInactiveScreens={false}>
                 <Stack.Screen name='Login' component={Login} />
                 <Stack.Screen name='Signup' component={Signup} />
             </Stack.Navigator>
