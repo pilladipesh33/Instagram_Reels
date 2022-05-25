@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, SafeAreaView, Button} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import React, {useContext} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors, IconSize, FontSize} from '../../constants/Theme';
@@ -6,9 +6,10 @@ import {ThemeContext} from '../../context/Themes/index';
 import {ToggleButton} from './Button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Theme = ({navigation}) => {
-  const {theme} = useContext(ThemeContext);
 
+const Theme = ({navigation}) => {
+  const {theme} = useContext(ThemeContext);       //Destructure the Theme variable
+ 
   return (
     <SafeAreaView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
