@@ -5,6 +5,8 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import React, {useContext, useState} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
@@ -106,10 +108,12 @@ const styles = StyleSheet.create({
   container_light: {
     backgroundColor: 'white',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   container_dark: {
     backgroundColor: '#413F42',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   icon_light: {
     color: Colors.BLACK,

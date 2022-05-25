@@ -21,7 +21,7 @@ export default [
   {
     id: 'p2',
     videoUri:
-      'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-11ea-8725-311975ea9616/proccessed_720.mp4',
+    'https://v.pinimg.com/videos/mc/720p/11/05/2c/11052c35282355459147eabe31cf3c75.mp4',
     user: {
       id: 'u1',
       username: 'daviddobrik',
@@ -40,7 +40,7 @@ export default [
   {
     id: 'p3',
     videoUri:
-      'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-11ea-8725-311975ea9616/proccessed_720.mp4',
+    'https://v.pinimg.com/videos/mc/720p/c9/22/d8/c922d8391146cc2fdbeb367e8da0d61f.mp4',
     user: {
       id: 'u1',
       username: 'daviddobrik',

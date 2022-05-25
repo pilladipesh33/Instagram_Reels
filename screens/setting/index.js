@@ -1,12 +1,20 @@
-import {StyleSheet, Text, View, SafeAreaView, Pressable} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, Pressable, Platform, StatusBar} from 'react-native';
 import React, { useContext } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors, IconSize, FontSize} from '../../constants/Theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ThemeContext } from '../../context/Themes/index';
+import { useDispatch } from 'react-redux';
+import { handleSignOut } from '../../redux/action/AuthAction';
 
 const Setting = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+
+
+  function Logout(){
+    dispatch(handleSignOut());
+  }
   return (
     <SafeAreaView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
@@ -54,10 +62,10 @@ const Setting = ({navigation}) => {
           />
           <Text style={styles[`text_${theme}`]}>Parent wellbeing</Text>
         </View>
-        <View style={styles.icon}>
+        <Pressable style={styles.icon} onPress={Logout}>
           <AntDesign name="logout" style={styles[`icon_${theme}`]} size={IconSize.SMALL} />
           <Text style={styles[`text_${theme}`]}>Logout</Text>
-        </View>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -69,10 +77,12 @@ const styles = StyleSheet.create({
   container_light: {
     backgroundColor: 'white',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   container_dark: {
     backgroundColor: '#413F42',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   icon_light: {
     color: Colors.BLACK,

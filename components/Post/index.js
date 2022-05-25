@@ -15,7 +15,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Colors, IconSize, FontSize } from '../../constants/Theme';
 
-const {height} = Dimensions.get('window');
+const {height} = Dimensions.get('screen');
 
 const VideoPlayers = (props) => {
   const [isPaused, setisPaused] = useState(false);
@@ -106,7 +106,7 @@ export default VideoPlayers;
 const styles = StyleSheet.create({
   screen: {
     width: '100%',
-    height: height - 80,
+    height: height - 85,
   },
   videoPlayer: {
     position: 'absolute',

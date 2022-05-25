@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "799724124194",
+    "project_id": "reelsclone-87242",
+    "storage_bucket": "reelsclone-87242.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799724124194:android:88b87cc58d397a8353f27b",
+        "android_client_info": {
+          "package_name": "com.assignment2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799724124194-hiidghk3n273lpfsr0ft3hhobpo65g7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfTg_ZbHFy0_km5UWJFA_-FoTpRcK8dWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799724124194-hiidghk3n273lpfsr0ft3hhobpo65g7d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "799724124194-851jpttlhrhovdjhg39ds316sho068of.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Assignment2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

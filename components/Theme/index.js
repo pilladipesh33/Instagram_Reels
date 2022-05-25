@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, Dimensions, Platform, StatusBar} from 'react-native';
 import React, {useContext} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors, IconSize, FontSize} from '../../constants/Theme';
@@ -6,6 +6,7 @@ import {ThemeContext} from '../../context/Themes/index';
 import {ToggleButton} from './Button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+const height = Dimensions.get('screen');
 
 const Theme = ({navigation}) => {
   const {theme} = useContext(ThemeContext);       //Destructure the Theme variable
@@ -36,10 +37,12 @@ const styles = StyleSheet.create({
   container_light: {
     backgroundColor: 'white',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   container_dark: {
     backgroundColor: '#413F42',
     height: '100%',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   icon_light: {
     color: Colors.BLACK,

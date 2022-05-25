@@ -1,3 +1,5 @@
+import { Platform, StatusBar } from 'react-native';
+
 export const Colors = {
     WHITE : 'white',
     RED: '#FE2C55',
@@ -17,3 +19,5 @@ export const FontSize = {
     MEDIUM : 20,
     LARGE: 30,
 };
+
+export const Padding = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
