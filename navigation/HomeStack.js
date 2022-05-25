@@ -8,7 +8,7 @@ import Theme from '../components/Theme/index';
 
 const Stack = createStackNavigator();
 
-const RootNavigation = () => {
+const HomeStack = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -21,4 +21,4 @@ const RootNavigation = () => {
     )
 };
 
-export default RootNavigation;
+export default HomeStack;

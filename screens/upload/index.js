@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import React from 'react'
 
 const Upload = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Upload</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 
-export default Upload
+export default Upload;
