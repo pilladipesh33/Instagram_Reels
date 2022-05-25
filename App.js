@@ -1,12 +1,14 @@
-import { View, Text } from 'react-native';
+import { View} from 'react-native';
 import React from 'react';
-import Homescreen from './screens/Homescreen';
+import Navigation from './navigation';
+import { ThemeProvider } from './context/Themes';
 
 const App = () => {
   return (
-    <View>
-      <Homescreen />
-    </View>
+
+    <ThemeProvider>
+      <Navigation />
+    </ThemeProvider>
   );
 };
 
