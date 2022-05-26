@@ -32,7 +32,6 @@ const Login = ({navigation}) => {
       <KeyboardAvoidingView
       behavior="position"
       enabled={enableShift}
-      style={styles.container}
       >
       <View style={styles.imageLogo}>
         <Image
@@ -53,13 +52,12 @@ const Login = ({navigation}) => {
         />
       </View>
       <View style={styles.Input}>
-        <Input
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          newStyles={styles.textInput}
+      <Input
+          placeholder={'Password'}
           placeholderTextColor={Colors.WHITE}
+          value={password}
+          changeText={setPassword}
+          newStyles={styles.textInput}
           onFocus={() => setenableShift(false)}
         />
       </View>

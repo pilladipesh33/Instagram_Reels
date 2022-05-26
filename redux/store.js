@@ -5,7 +5,7 @@ import ReduxThunk from 'redux-thunk';
 import createSaga from 'redux-saga';
 import sagas from './sagas';
 import { storage } from '../storage';
-import reducers from './reducer'
+import reducers from './reducer';
 
 
 const persistConfig = {
