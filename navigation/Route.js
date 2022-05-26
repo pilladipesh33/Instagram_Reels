@@ -6,8 +6,6 @@ import AuthStack from './AuthStack';
 
 export const RootNavigation = () => {
     const accessToken = useSelector(state => state?.auth?.accessToken);
-    console.log(accessToken);
-  
     return (
       <View style={{flex: 1, backgroundColor: 'black'}}>
         <StatusBar translucent backgroundColor="transparent" />
