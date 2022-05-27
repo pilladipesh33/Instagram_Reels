@@ -24,6 +24,7 @@ const Input = (
       onFocus,
       underlineColorAndroid,
       placeholderTextColor,
+      numberOfLines
     }) => {
   const {textInput, errorStyle} = InputFieldStyles;
   return (
@@ -48,6 +49,7 @@ const Input = (
               maxLength={maxLength}
               onFocus={onFocus}
               placeholderTextColor={placeholderTextColor}
+              numberOfLines={numberOfLines}
           />
         </View>
       </View>

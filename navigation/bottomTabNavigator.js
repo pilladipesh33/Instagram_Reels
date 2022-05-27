@@ -10,6 +10,8 @@ import Discover from '../screens/discover/index';
 import Profile from '../screens/profile';
 import Inbox from '../screens/inbox/index';
 import Upload from '../screens/upload/index';
+import Feed from '../screens/feed/index';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +19,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
+    initialRouteName='Feed'
       screenOptions={{
         headerShown: false,
         tabBarStyle: {backgroundColor: '#000'},
@@ -36,6 +39,19 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="Feed"
+        component={Feed}
+        options={{
+          tabBarIcon: () => (
+            <FontAwesome
+              name={'feed'}
+              size={IconSize.MEDIUM}
+              color={Colors.WHITE}
+            />
+          ),
+        }}
+      />
+      {/* <Tab.Screen
         name="Discover"
         component={Discover}
         options={{
@@ -47,7 +63,7 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Upload"
         component={Upload}
