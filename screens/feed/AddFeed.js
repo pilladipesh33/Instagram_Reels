@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {IconSize, Colors, Padding, FontSize} from '../../constants/Theme';
@@ -49,9 +49,11 @@ const AddFeed = ({navigation}) => {
       alert(res.customButton);
     } else {
       const source = {uri: res.assets[0].uri};
-      setImageId(source);
+      setImageId(source.uri);
     }
   }
+
+  console.log(imageId);
 
   return (
     <View style={styles.screen}>
@@ -73,6 +75,13 @@ const AddFeed = ({navigation}) => {
           numberOfLines={5}
         />
       </View>
+      {imageId != null ? (
+        <View>
+          <View style={styles.postImg}>
+            <Image source={{uri: `${imageId}`}} style={styles.postImage} />
+          </View>
+        </View>
+      ) : null }
       <View>
         <Button
           buttonColor={'#ffdee1'}
@@ -84,12 +93,15 @@ const AddFeed = ({navigation}) => {
       </View>
       <View style={styles.postButton}>
         <ActionButton buttonColor="rgba(231,76,60,1)">
-            <ActionButton.Item buttonColor="#9b59b6" title="Camera">
-              <Icon name="camera" style={styles.actionButtonIcon} size={30} />
-            </ActionButton.Item>
+          <ActionButton.Item
+            buttonColor="#9b59b6"
+            title="Camera"
+            onPress={() => openCamera()}>
+            <Icon name="camera" style={styles.actionButtonIcon} size={30} />
+          </ActionButton.Item>
           <ActionButton.Item
             buttonColor="#3498db"
-            title="Notifications"
+            title="Gallery"
             onPress={() => openGallery()}>
             <Icon
               name="md-image-outline"
@@ -132,7 +144,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   postButton: {
-    top: '50%',
+    // top: '50%',
+  },
+  postImage: {
+    height: 300,
+    width: '90%',
+  },
+  postImg: {
+    paddingTop: '5%',
+    alignItems: 'center',
   },
 });
 
