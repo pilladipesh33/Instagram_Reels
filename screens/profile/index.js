@@ -1,19 +1,19 @@
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
   View,
   Image,
   TouchableOpacity,
   Platform,
   StatusBar,
+  ScrollView
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import { ThemeContext } from '../../context/Themes/index';
+import {ThemeContext} from '../../context/Themes/index';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
@@ -28,7 +28,7 @@ const Profile = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles[`container_${theme}`]}>
+    <ScrollView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
         <Text style={[styles.name, styles[`text_${theme}`]]}>@daviddobrik</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
@@ -36,7 +36,7 @@ const Profile = ({navigation}) => {
             name="settings"
             size={IconSize.SMALL}
             color={Colors.BLACK}
-            style={[styles[`icon_${theme}`],{marginRight: 10, marginTop: 20}]}
+            style={[styles[`icon_${theme}`], {marginRight: 10, marginTop: 20}]}
           />
         </TouchableOpacity>
       </View>
@@ -47,7 +47,7 @@ const Profile = ({navigation}) => {
           }}
           style={styles.profilePicture}
         />
-        <Text style={[styles.name,styles[`text_${theme}`]]}>David Dobrik</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>David Dobrik</Text>
       </View>
 
       <View style={styles.topRow}>
@@ -55,15 +55,21 @@ const Profile = ({navigation}) => {
         <Text style={[styles.detail, styles[`text_${theme}`]]}>1.6M</Text>
       </View>
       <View style={styles.topRow}>
-        <Text style={[styles[`text_${theme}`],{color: Colors.GREY}]}>Followers</Text>
-        <Text style={[styles[`text_${theme}`],{color: Colors.GREY}]}>Likes</Text>
+        <Text style={[styles[`text_${theme}`], {color: Colors.GREY}]}>
+          Followers
+        </Text>
+        <Text style={[styles[`text_${theme}`], {color: Colors.GREY}]}>
+          Likes
+        </Text>
       </View>
 
       <View style={styles.EditButtonContainer}>
         <TouchableOpacity
           style={styles.editButton}
           onPress={navigateToEditProfile}>
-          <Text style={[styles.editText, styles[`text_${theme}`]]}>Edit profile</Text>
+          <Text style={[styles.editText, styles[`text_${theme}`]]}>
+            Edit profile
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -85,11 +91,13 @@ const Profile = ({navigation}) => {
             justifyContent: 'space-around',
             paddingTop: 10,
           }}>
-          <MaterialCommunityIcon
-            name="format-columns"
-            size={IconSize.SMALL}
-            style={styles[`icon_${theme}`]}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('UserPost')}>
+            <MaterialCommunityIcon
+              name="format-columns"
+              size={IconSize.SMALL}
+              style={styles[`icon_${theme}`]}
+            />
+          </TouchableOpacity>
           <MaterialCommunityIcon
             name="cards-heart-outline"
             size={IconSize.SMALL}
@@ -98,7 +106,7 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.line} />
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

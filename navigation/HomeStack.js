@@ -6,6 +6,7 @@ import EditProfile from '../screens/profile/EditProfile';
 import Setting from '../screens/setting/index';
 import Theme from '../components/Theme/index';
 import AddFeed from '../screens/feed/AddFeed';
+import UserPost from '../screens/profile/UserPost';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,7 @@ const HomeStack = () => {
                 <Stack.Screen name='EditProfile' component={EditProfile} />
                 <Stack.Screen name='Setting' component={Setting} />
                 <Stack.Screen name='Theme' component={Theme} />
-                <Stack.Screen name='AddFeed' component={AddFeed} />
+                <Stack.Screen name='UserPost' component={UserPost} />
             </Stack.Navigator>
         </NavigationContainer>
     )
