@@ -1,12 +1,21 @@
-import { View, Text } from 'react-native';
 import React from 'react';
-import Homescreen from './screens/Homescreen';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import configureStore from './redux/store';
+import {RootNavigation} from './navigation/Route';
+import {ThemeProvider} from './context/Themes';
+
+const {store, persistor} = configureStore();
 
 const App = () => {
   return (
-    <View>
-      <Homescreen />
-    </View>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+        <RootNavigation />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
