@@ -4,14 +4,14 @@ import {Image} from 'react-native';
 import Home from '../screens/home';
 import {Colors, IconSize} from '../constants/Theme';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Discover from '../screens/discover/index';
 import Profile from '../screens/profile';
 import Inbox from '../screens/inbox/index';
-import Upload from '../screens/upload/index';
 import Feed from '../screens/feed/index';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AddFeed from '../screens/feed/AddFeed';
+import Discover from '../screens/discover/index';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-    initialRouteName='Feed'
+    initialRouteName='Upload'
       screenOptions={{
         headerShown: false,
         tabBarStyle: {backgroundColor: '#000'},
@@ -38,7 +38,7 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Feed"
         component={Feed}
         options={{
@@ -50,8 +50,8 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
-      />
-      {/* <Tab.Screen
+      /> */}
+      <Tab.Screen
         name="Discover"
         component={Discover}
         options={{
@@ -63,10 +63,10 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Upload"
-        component={Upload}
+        component={AddFeed}
         options={{
           tabBarIcon: () => (
             <Image
