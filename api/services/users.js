@@ -1,15 +1,15 @@
 import {firebase} from '@react-native-firebase/firestore';
 
-export const queryUserByEmail = Email =>
+export const queryUserByEmail = email =>
   new Promise((resolve, reject) => {
-    if (Email === '') {
+    if (email === '') {
       resolve([]);
     } else {
       firebase
         .firestore()
         .collection('users')
-        .where('Email', '>=', Email)
-        .where('Email', '<=', Email + '\uf8ff')
+        .where('Email', '>=', email)
+        .where('Email', '<=', email + '\uf8ff')
         .get()
         .then(snapshot => {
           let users = snapshot.docs.map(doc => {
