@@ -22,3 +22,19 @@ export const queryUserByEmail = Email =>
         .catch(() => reject());
     }
   });
+
+export const queryUserForDetail = async(uid) => {
+  const array = [];
+  return await firebase.firestore()
+  .collection('users')
+  .doc(uid)
+  .get()
+  .then(snapshot => {
+      // const doc = snapshot.data();
+      // array.push(doc);
+      // return array;
+      if (snapshot.exists){
+        return snapshot.data();
+      }
+  });
+  };

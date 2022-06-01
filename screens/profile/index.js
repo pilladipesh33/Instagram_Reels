@@ -14,9 +14,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {ThemeContext} from '../../context/Themes/index';
+import { queryUserForDetail } from '../../api/services/users';
+import { useSelector } from 'react-redux';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
+  const [userDetail, setUserDetail] = useState(null);
+  const accessToken = useSelector(state => state?.auth?.accessToken)
 
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
@@ -27,10 +31,17 @@ const Profile = ({navigation}) => {
     setIsBookmark(!isBookmark);
   };
 
+  useEffect(() => {
+    queryUserForDetail(accessToken)
+    .then(setUserDetail);
+  },[accessToken]);
+
+  console.log(userDetail);
+
   return (
     <ScrollView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
-        <Text style={[styles.name, styles[`text_${theme}`]]}>@daviddobrik</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.Email}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Feather
             name="settings"
@@ -47,7 +58,7 @@ const Profile = ({navigation}) => {
           }}
           style={styles.profilePicture}
         />
-        <Text style={[styles.name, styles[`text_${theme}`]]}>David Dobrik</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{`@${userDetail.FullName}`}</Text>
       </View>
 
       <View style={styles.topRow}>

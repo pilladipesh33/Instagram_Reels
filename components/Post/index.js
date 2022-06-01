@@ -40,7 +40,7 @@ const VideoPlayers = (props) => {
       <TouchableWithoutFeedback onPress={onPlayPausePress}>
         <VideoPlayer
           source={{
-            uri: post?.videoUri,
+            uri: 'https://pixabay.com/videos/id-31851/',
           }}
           onError={e => console.log(e)}
           resizeMode={'cover'}
