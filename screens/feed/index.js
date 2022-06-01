@@ -3,7 +3,6 @@ import React from 'react';
 import {Colors, IconSize, Padding, FontSize} from '../../constants/Theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PostCard from '../../components/PostCard';
-import { Posts } from '../../assets/data/postData';
 
 const Feed = ({navigation}) => {
   return (
@@ -17,12 +16,12 @@ const Feed = ({navigation}) => {
           onPress={() => navigation.navigate('AddFeed')}
         />
       </View>
-      <FlatList
+      {/* <FlatList
       data={Posts}
       renderItem={({item}) => <PostCard item={item} />}
       keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
-      />
+      /> */}
     </View>
   );
 };

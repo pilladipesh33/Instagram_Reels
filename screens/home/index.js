@@ -13,6 +13,7 @@ const Home = () => {
         snapToInterval={Dimensions.get('screen').height - 85}
         snapToAlignment={'start'}
         decelerationRate={'fast'}
+        pagingEnabled
       />
     </View>
   );

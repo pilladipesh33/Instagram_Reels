@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -14,6 +14,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Colors, IconSize, FontSize } from '../../constants/Theme';
+import { getFeed } from '../../api/services/posts';
+import { useSelector } from 'react-redux';
 
 const {height} = Dimensions.get('screen');
 
@@ -21,6 +23,8 @@ const VideoPlayers = (props) => {
   const [isPaused, setisPaused] = useState(false);
   const [post, setPost] = useState(props?.post);
   const [isLiked,  setisLiked] = useState(false);
+  const [postFeed, setPostFeed] = useState([]);
+  const accessTokken =  useSelector(state => state?.auth?.accessToken);
 
   const onPlayPausePress = () => {
     setisPaused(!isPaused);
@@ -35,12 +39,19 @@ const VideoPlayers = (props) => {
     setisLiked(!isLiked)
   };
 
+  useEffect(() => {
+    getFeed(accessTokken)
+    .then(setPostFeed)
+  },[accessTokken]);
+
+  console.log(postFeed);
+
   return (
     <View style={styles.screen}>
       <TouchableWithoutFeedback onPress={onPlayPausePress}>
         <VideoPlayer
           source={{
-            uri: 'https://pixabay.com/videos/id-31851/',
+            uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
           }}
           onError={e => console.log(e)}
           resizeMode={'cover'}
