@@ -9,6 +9,7 @@ import {Button} from '../../components/Button';
 import DocumentPicker from 'react-native-document-picker';
 import VideoPlayer from 'react-native-video';
 import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 
 const AddFeed = ({navigation}) => {
@@ -30,12 +31,13 @@ const AddFeed = ({navigation}) => {
   const UploadVideo = async () => {
     return await firestore()
       .collection('PostData')
-      .doc(accessToken)
-      .collection('Post')
       .add({
+        creator: firebase.auth().currentUser.uid,
         videoId: videoId,
         detail: detail,
-        userId: accessToken,
+        likesCount: 0,
+        commentsCount: 0,
+        creation: firestore.FieldValue.serverTimestamp(),
       });
   };
 
