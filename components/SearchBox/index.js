@@ -5,24 +5,26 @@ import {Colors, IconSize} from '../../constants/Theme';
 
 const SearchBox = ({value, onChangeText}) => {
   return (
-    <View style={styles.container}>
-      <FontAwesome name="search" color={Colors.GREY} size={IconSize.SMALL} />
-      <TextInput
-        placeholder="Search..."
-        placeholderTextColor={Colors.BLACK}
-        value={value}
-        onChangeText={onChangeText}
-        style={{flex: 1, paddingHorizontal: 12}}
-      />
+    <View style={styles.box}>
+      <View style={styles.container}>
+        <FontAwesome name="search" color={Colors.GREY} size={IconSize.SMALL} />
+        <TextInput
+          placeholder="Search..."
+          placeholderTextColor={Colors.BLACK}
+          value={value}
+          onChangeText={onChangeText}
+          style={{flex: 1, paddingHorizontal: 12}}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     height: 44,
-    backgroundColor: '#f1f3f6',
+    backgroundColor: 'lightgrey',
     borderRadius: 8,
     paddingHorizontal: 10,
     display: 'flex',
@@ -35,6 +37,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f3f6',
     borderRadius: 6,
     paddingHorizontal: 10,
+  },
+  box: {
+    alignItems: 'center',
   },
 });
 

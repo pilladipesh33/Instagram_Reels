@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-    initialRouteName='Upload'
+    initialRouteName='Discover'
       screenOptions={{
         headerShown: false,
         tabBarStyle: {backgroundColor: '#000'},
