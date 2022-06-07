@@ -1,11 +1,16 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Colors, FontSize } from '../../constants/Theme';
+import { useNavigation } from '@react-navigation/native';
 
 const SearchUserItems = ({item}) => {
+  // const navigation = useNavigation();
+  // function sendProfile() {
+  //   navigation.navigate('OtherProfile', {otherProfile: item});
+  // }
   console.log(item.FullName);
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => {}}>
       <Text style={{flex: 1, fontSize: FontSize.MEDIUM}}>{item.FullName}</Text>
       <Image source={{uri:"https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/11/2021-Simple-Whatsapp-Dp-Profile-Images-photo-hd.gif"}} style={styles.images}/>
     </TouchableOpacity>

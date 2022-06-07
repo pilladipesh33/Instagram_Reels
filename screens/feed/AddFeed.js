@@ -10,9 +10,11 @@ import DocumentPicker from 'react-native-document-picker';
 import VideoPlayer from 'react-native-video';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
+import storage from '@react-native-firebase/storage';
 
 const AddFeed = ({navigation}) => {
   const [videoId, setVideoId] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [detail, setDetail] = useState('');
   const accessToken = useSelector(state => state?.auth?.accessToken);
 
@@ -26,6 +28,39 @@ const AddFeed = ({navigation}) => {
       console.log(e);
     }
   }
+
+  console.log(videoId);
+
+  const uploadImage = async () => {
+    if (videoId == null) {
+      videoId;
+
+      setUploading(true);
+    } else {
+      setUploading(false);
+    }
+
+    const storageRef = storage().ref(`photos/${videoId}`);
+    const task = storageRef.putFile(videoId);
+
+    task.on('state_changed', taskSnapshot => {
+      console.log(
+        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
+      );
+    });
+
+    try {
+      await task;
+      const url = await storageRef.getDownloadURL();
+      setUploading(false);
+      setVideoId(null);
+      alert('Post Added', 'your image has been uploaded');
+      return url;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  };
 
   const UploadVideo = async () => {
     return await firestore()
@@ -82,7 +117,7 @@ const AddFeed = ({navigation}) => {
           title="Post"
           buttonStyle={{width: '50%', alignSelf: 'center'}}
           textStyle={{fontSize: 20}}
-          onPress={UploadVideo}
+          onPress={uploadImage}
         />
       </View>
       <View style={styles.postButton}>
@@ -123,7 +158,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: FontSize.LARGE,
     color: Colors.BLACK,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   container: {
     // top: '50%',

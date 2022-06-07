@@ -14,12 +14,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {ThemeContext} from '../../context/Themes/index';
-import { queryUserForDetail } from '../../api/services/users';
 import { useSelector } from 'react-redux';
+import { firebase } from '@react-native-firebase/firestore';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
-  const [userDetail, setUserDetail] = useState(null);
+  const [userDetail, setUserDetail] = useState([]);
   const accessToken = useSelector(state => state?.auth?.accessToken)
 
   const navigateToEditProfile = () => {
@@ -31,17 +31,32 @@ const Profile = ({navigation}) => {
     setIsBookmark(!isBookmark);
   };
 
+  const queryUserForDetail = async() => {
+    const array = [];
+    return await firebase.firestore()
+    .collection('users')
+    .doc(accessToken)
+    .get()
+    .then(snapshot => {
+        const doc = snapshot.data();
+        array.push(doc);
+        return array;
+    });
+    };
+  
+
   useEffect(() => {
     queryUserForDetail(accessToken)
     .then(setUserDetail);
-  },[accessToken]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
-  console.log(userDetail);
+  console.log(userDetail[0]?.Email);
 
   return (
     <ScrollView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.Email}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{`${userDetail[0]?.Email}`}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Feather
             name="settings"
@@ -54,11 +69,11 @@ const Profile = ({navigation}) => {
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: 'https://pbs.twimg.com/profile_images/1223706175910211584/tmu8d9fA.jpg',
+            uri: 'https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg',
           }}
           style={styles.profilePicture}
         />
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{`@${userDetail.FullName}`}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{`${userDetail[0]?.FullName}`}</Text>
       </View>
 
       <View style={styles.topRow}>
@@ -102,7 +117,7 @@ const Profile = ({navigation}) => {
             justifyContent: 'space-around',
             paddingTop: 10,
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('UserPost')}>
+          <TouchableOpacity>
             <MaterialCommunityIcon
               name="format-columns"
               size={IconSize.SMALL}

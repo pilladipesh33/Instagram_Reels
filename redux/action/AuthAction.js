@@ -14,12 +14,6 @@ export const loginRequest = () => {
     type: LOGIN_REQUEST,
   };
 };
-export const receiveLogin = user => {
-  return {
-    type: LOGIN_SUCCESS,
-    user: user,
-  };
-};
 
 export const loginError = error => {
   return {

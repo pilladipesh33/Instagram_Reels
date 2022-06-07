@@ -3,7 +3,7 @@ import {TextInput, View, StyleSheet} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Colors, IconSize} from '../../constants/Theme';
 
-const SearchBox = ({value, onChangeText}) => {
+const SearchBox = ({ onChangeText}) => {
   return (
     <View style={styles.box}>
       <View style={styles.container}>
@@ -11,7 +11,6 @@ const SearchBox = ({value, onChangeText}) => {
         <TextInput
           placeholder="Search..."
           placeholderTextColor={Colors.BLACK}
-          value={value}
           onChangeText={onChangeText}
           style={{flex: 1, paddingHorizontal: 12}}
         />

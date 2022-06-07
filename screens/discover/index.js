@@ -4,6 +4,7 @@ import SearchBox from '../../components/SearchBox'
 import SearchUserItems from './SearchUserItems';
 import { Colors } from '../../constants/Theme';
 import { queryUserByEmail } from '../../api/services/users';
+import { useSelector } from 'react-redux';
 
 
 const Discover = () => {
@@ -23,7 +24,7 @@ const Discover = () => {
         <FlatList
         data={searchUser}
         renderItem={SearchUserItems}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         />
     </SafeAreaView>
   )

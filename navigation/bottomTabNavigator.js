@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-    initialRouteName='Home'
+    initialRouteName='Inbox'
       screenOptions={{
         headerShown: false,
         tabBarStyle: {backgroundColor: '#000'},
