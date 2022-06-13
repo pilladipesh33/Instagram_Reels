@@ -15,7 +15,7 @@ const HomeStack = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name='Home' component={BottomTabNavigator} />
+                <Stack.Screen name='BottomTab' component={BottomTabNavigator} />
                 <Stack.Screen name='EditProfile' component={EditProfile} />
                 <Stack.Screen name='Setting' component={Setting} />
                 <Stack.Screen name='Theme' component={Theme} />

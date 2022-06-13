@@ -45,7 +45,7 @@ const VideoPlayers = (props) => {
       <TouchableWithoutFeedback onPress={onPlayPausePress}>
         <VideoPlayer
           source={{
-            uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            uri: post.media,
           }}
           onError={e => console.log(e)}
           resizeMode={'cover'}
@@ -70,7 +70,7 @@ const VideoPlayers = (props) => {
 
           <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
             <Entypo name="heart" color={isLiked ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
-            <Text style={styles.statsLabel}>{post?.likesCount}</Text>
+            <Text style={styles.statsLabel}>{post?.likeCounts}</Text>
           </TouchableOpacity>
 
           <View style={styles.iconContainer}>
@@ -86,10 +86,7 @@ const VideoPlayers = (props) => {
 
         <View style={styles.bottomContainer}>
            <View>
-             <TouchableOpacity onPress={() => navigation.navigate('OtherProfile')}>
-            <Text style={styles.handle}>{post?.creator}</Text>
-             </TouchableOpacity>
-            <Text style={styles.description}>{post?.detail}</Text>
+            <Text style={styles.description}>{post?.description}</Text>
             </View>
           </View>
         </View>

@@ -3,9 +3,9 @@ import {firebase} from '@react-native-firebase/firestore';
 export const getFeed = async(uid) => {
     try {
         return await firebase.firestore()
-        .collection('PostData')
+        .collection('post')
         .doc(uid)
-        .collection('Post')
+        .collection('postData')
         .get()
         .then((res) => {
             const posts =  res.docs.map((value) => {
@@ -23,9 +23,8 @@ export const getFeed = async(uid) => {
 export const getUserPost = (creator) => new Promise(async (resolve, reject) => {
     try {
         const snapshot = await firebase.firestore()
-            .collection('PostData')
-            .where('creator', '>=', creator)
-            .where('creator', '<=', creator + '\uf8ff')
+            .collection('post')
+            // .collection('postData')
             .get();
         let users = snapshot.docs.map(doc => {
             const data = doc.data();

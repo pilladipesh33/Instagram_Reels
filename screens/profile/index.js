@@ -10,60 +10,53 @@ import {
 } from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {ThemeContext} from '../../context/Themes/index';
 import { useSelector } from 'react-redux';
 import { firebase } from '@react-native-firebase/firestore';
 import { getFeed } from '../../api/services/posts';
-import VideoPlayer from 'react-native-video';
 import { FlatList } from 'react-native-gesture-handler';
 import UserPostDetail from '../../components/UserPostDetail/index';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
-  const [userDetail, setUserDetail] = useState([]);
+  const [userDetail, setUserDetail] = useState({});
   const [postFeed, setPostFeed] = useState([]);
-  const accessToken = useSelector(state => state?.auth?.accessToken)
+  const [loading, setLoading] = useState(true);
+  const accessToken = useSelector(state => state?.auth?.accessToken);
 
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
-
-  const [isBookmark, setIsBookmark] = useState(true);
-  const toggleBookmark = () => {
-    setIsBookmark(!isBookmark);
+  
+  const getUser = async () => {
+    const currentUser = await firebase.firestore()
+      .collection('users')
+      .doc(accessToken)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          console.log('User Data', documentSnapshot.data());
+          setUserDetail(documentSnapshot.data());
+        }
+      });
   };
 
-  const queryUserForDetail = async() => {
-    const array = [];
-    return await firebase.firestore()
-    .collection('users')
-    .doc(accessToken)
-    .get()
-    .then(snapshot => {
-        const doc = snapshot.data();
-        array.push(doc);
-        return array;
-    });
-    };
-  
-
   useEffect(() => {
-    queryUserForDetail(accessToken)
-    .then(setUserDetail);
+    getUser();
     getFeed(accessToken)
-    .then(setPostFeed)
+    .then(setPostFeed);
+    navigation.addListener('focus', () => setLoading(!loading));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[navigation, loading]);
 
-  console.log('post',postFeed);
+  console.log('post',userDetail);
 
   return (
     <ScrollView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{`${userDetail[0]?.Email}`}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.Email}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Feather
             name="settings"
@@ -76,11 +69,13 @@ const Profile = ({navigation}) => {
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: 'https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg',
-          }}
+            uri: userDetail
+            ? userDetail.Image
+            : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+        }}
           style={styles.profilePicture}
         />
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{`${userDetail[0]?.FullName}`}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.FullName}</Text>
       </View>
 
       <View style={styles.topRow}>
@@ -103,16 +98,6 @@ const Profile = ({navigation}) => {
           <Text style={[styles.editText, styles[`text_${theme}`]]}>
             Edit profile
           </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.editButton, {marginLeft: 10}]}
-          onPress={toggleBookmark}>
-          <FontAwesome
-            name={isBookmark ? 'bookmark-o' : 'bookmark'}
-            size={20}
-            style={styles[`icon_${theme}`]}
-          />
         </TouchableOpacity>
       </View>
 
@@ -208,8 +193,8 @@ const styles = StyleSheet.create({
     width: '70%',
     alignItems: 'center',
     marginTop: 20,
-    flexDirection: 'row',
-    marginLeft: 90,
+    // flexDirection: 'row',
+    marginLeft: 50,
   },
   editButton: {
     paddingVertical: 10,

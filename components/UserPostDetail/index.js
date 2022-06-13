@@ -10,16 +10,16 @@ const UserPostDetail = (props) => {
     <View style={styles.screen}>
       <VideoPlayer
             source={{
-              uri: post.item.videoId[0].uri,
+              uri: post.item.media,
             }}
             onError={e => console.log(e)}
-            resizeMode={'contain'}
+            resizeMode={'cover'}
             style={styles.videoPlayer}
             repeat={true}
             volume={0.0}
           />
           <View style={styles.description}>
-            <Text style={styles.descriptionText}>{post.item.detail}</Text>
+            <Text style={styles.descriptionText}>{post.item.description}</Text>
           </View>
     </View>
   )
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: FontSize.MEDIUM,
-    color: Colors.BLACK,
-    marginBottom: 40
+    marginBottom: 40,
+    color: Colors.BLACK
   }
 })
 

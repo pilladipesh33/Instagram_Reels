@@ -13,6 +13,20 @@ export const getPostByUser = (uid = firebase.auth().currentUser.uid) => async di
             return {id, ...data};
         });
         console.log(posts);
+    })
+};
+
+export const getUserPost = (uid) => dispatch => {
+    firestore().collection('post')
+    .doc(uid)
+    .collection('postData')
+    .where('creator', '==', uid)
+    .onSnapshot((snapshot) => {
+        let posts = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const id = doc.id;
+            return {id, ...data};
+        });
         dispatch({type: CURRENT_USER_POST_UPDATE, currentUserPost: posts})
     })
 }
