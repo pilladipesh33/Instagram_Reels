@@ -4,7 +4,7 @@ export const getFeed = async(uid) => {
     try {
         return await firebase.firestore()
         .collection('PostData')
-        .doc(!uid)
+        .doc(uid)
         .collection('Post')
         .get()
         .then((res) => {

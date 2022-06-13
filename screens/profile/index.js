@@ -16,10 +16,15 @@ import Feather from 'react-native-vector-icons/Feather';
 import {ThemeContext} from '../../context/Themes/index';
 import { useSelector } from 'react-redux';
 import { firebase } from '@react-native-firebase/firestore';
+import { getFeed } from '../../api/services/posts';
+import VideoPlayer from 'react-native-video';
+import { FlatList } from 'react-native-gesture-handler';
+import UserPostDetail from '../../components/UserPostDetail/index';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
   const [userDetail, setUserDetail] = useState([]);
+  const [postFeed, setPostFeed] = useState([]);
   const accessToken = useSelector(state => state?.auth?.accessToken)
 
   const navigateToEditProfile = () => {
@@ -48,10 +53,12 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     queryUserForDetail(accessToken)
     .then(setUserDetail);
+    getFeed(accessToken)
+    .then(setPostFeed)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
-  console.log(userDetail[0]?.Email);
+  console.log('post',postFeed);
 
   return (
     <ScrollView style={styles[`container_${theme}`]}>
@@ -131,6 +138,13 @@ const Profile = ({navigation}) => {
           />
         </View>
         <View style={styles.line} />
+      </View>
+      <View>
+        <FlatList
+        data={postFeed}
+        renderItem={(item) => <UserPostDetail detail={item}/>} 
+        horizontal
+        />
       </View>
     </ScrollView>
   );
@@ -215,4 +229,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     marginTop: 15,
   },
+  videoPlayer:{
+    height: 200,
+    width: 100,
+  }
 });

@@ -24,7 +24,6 @@ export const queryUserByEmail = Email =>
   });
 
 export const queryUserForDetail = async(uid) => {
-  const array = [];
   return await firebase.firestore()
   .collection('users')
   .doc(uid)

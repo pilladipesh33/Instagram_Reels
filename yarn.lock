@@ -2623,6 +2623,11 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
+cordova-plugin-mediapicker-dmcsdk@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-mediapicker-dmcsdk/-/cordova-plugin-mediapicker-dmcsdk-2.4.5.tgz#6c839de7411323ae43154a88e24b382627deb896"
+  integrity sha512-gRO6yWsqaiPz8lKcQ9toPBDBN1+KcrhhAPVQhTIgGtfXpCVBfMkyMAbOxS+bhfXKx0FZqiysyyCnJ5p7jWYrZA==
+
 core-js-compat@^3.21.0:
   version "3.22.5"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.22.5.tgz#7fffa1d20cb18405bd22756ca1353c6f1a0e8614"

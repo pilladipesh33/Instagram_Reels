@@ -4,13 +4,13 @@ import VideoPlayer from 'react-native-video';
 import { FontSize, Colors } from '../../constants/Theme';
 
 const UserPostDetail = (props) => {
-    const [post, setPost] = useState(props?.post);
-    console.log(post);
+    const [post, setPost] = useState(props?.detail);
+    console.log('key', post.item);
   return (
     <View style={styles.screen}>
       <VideoPlayer
             source={{
-              uri: `${post?.videoId}`,
+              uri: post.item.videoId[0].uri,
             }}
             onError={e => console.log(e)}
             resizeMode={'contain'}
@@ -19,7 +19,7 @@ const UserPostDetail = (props) => {
             volume={0.0}
           />
           <View style={styles.description}>
-      <Text style={styles.descriptionText}>{post.detail}</Text>
+            <Text style={styles.descriptionText}>{post.item.detail}</Text>
           </View>
     </View>
   )
@@ -29,12 +29,10 @@ const styles = StyleSheet.create({
   videoPlayer: {
     height: 400,
     width: 200,
-    borderColor: 'black',
     borderWidth: 2
   },
   screen: {
     padding: 10,
-    borderColor: 'red',
     borderWidth: 2
   },
   description: {
@@ -44,6 +42,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: FontSize.MEDIUM,
     color: Colors.BLACK,
+    marginBottom: 40
   }
 })
 

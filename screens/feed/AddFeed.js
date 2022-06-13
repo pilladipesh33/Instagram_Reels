@@ -1,6 +1,9 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {IconSize, Colors, Padding, FontSize} from '../../constants/Theme';
 import {Input} from '../../components/Input';
 import ActionButton from 'react-native-action-button';
@@ -8,13 +11,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from '../../components/Button';
 import DocumentPicker from 'react-native-document-picker';
 import VideoPlayer from 'react-native-video';
-import firestore from '@react-native-firebase/firestore';
+import firestore, { firebase } from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import storage from '@react-native-firebase/storage';
 
 const AddFeed = ({navigation}) => {
   const [videoId, setVideoId] = useState(null);
-  const [uploading, setUploading] = useState(false);
   const [detail, setDetail] = useState('');
   const accessToken = useSelector(state => state?.auth?.accessToken);
 
@@ -23,44 +25,13 @@ const AddFeed = ({navigation}) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.video],
       });
-      setVideoId(res[0].uri);
+      setVideoId(res);
     } catch (e) {
       console.log(e);
     }
   }
 
   console.log(videoId);
-
-  const uploadImage = async () => {
-    if (videoId == null) {
-      videoId;
-
-      setUploading(true);
-    } else {
-      setUploading(false);
-    }
-
-    const storageRef = storage().ref(`photos/${videoId}`);
-    const task = storageRef.putFile(videoId);
-
-    task.on('state_changed', taskSnapshot => {
-      console.log(
-        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-      );
-    });
-
-    try {
-      await task;
-      const url = await storageRef.getDownloadURL();
-      setUploading(false);
-      setVideoId(null);
-      alert('Post Added', 'your image has been uploaded');
-      return url;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  };
 
   const UploadVideo = async () => {
     return await firestore()
@@ -70,20 +41,27 @@ const AddFeed = ({navigation}) => {
       .add({
         videoId: videoId,
         detail: detail,
-        userId: accessToken,
+        creator: accessToken,
+        likesCount: 0,
+        commentCounts: 0,
+        creation: firebase.firestore.FieldValue.serverTimestamp(),
       });
   };
+
+  const uploadVideoStorage = () => {
+    try{
+    const reference = storage().ref(`${videoId[0].name}`);
+    const task = reference.putFile(`${videoId[0].uri}`);
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
 
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        {/* <MaterialIcons
-          name="arrow-back-ios"
-          size={IconSize.MEDIUM}
-          color={Colors.BLACK}
-          onPress={() => navigation.navigate('Feed')}
-          style={{position: 'absolute', left: 0, marginLeft: 10}}
-        /> */}
         <Text style={styles.headerText}>Create Post</Text>
       </View>
       <View style={styles.container}>
@@ -100,7 +78,7 @@ const AddFeed = ({navigation}) => {
         <View style={{alignItems: 'center'}}>
           <VideoPlayer
             source={{
-              uri: videoId,
+              uri: videoId[0].uri,
             }}
             onError={e => console.log(e)}
             resizeMode={'cover'}
@@ -117,7 +95,7 @@ const AddFeed = ({navigation}) => {
           title="Post"
           buttonStyle={{width: '50%', alignSelf: 'center'}}
           textStyle={{fontSize: 20}}
-          onPress={uploadImage}
+          onPress={() => UploadVideo()}
         />
       </View>
       <View style={styles.postButton}>

@@ -14,8 +14,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Colors, IconSize, FontSize } from '../../constants/Theme';
-import { getFeed } from '../../api/services/posts';
-import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const {height} = Dimensions.get('screen');
 
@@ -23,8 +22,8 @@ const VideoPlayers = (props) => {
   const [isPaused, setisPaused] = useState(false);
   const [post, setPost] = useState(props?.post);
   const [isLiked,  setisLiked] = useState(false);
-  const [postFeed, setPostFeed] = useState([]);
-  const accessTokken =  useSelector(state => state?.auth?.accessToken);
+
+  const navigation = useNavigation();
 
   const onPlayPausePress = () => {
     setisPaused(!isPaused);
@@ -39,12 +38,7 @@ const VideoPlayers = (props) => {
     setisLiked(!isLiked)
   };
 
-  useEffect(() => {
-    getFeed(accessTokken)
-    .then(setPostFeed)
-  },[accessTokken]);
-
-  console.log(postFeed);
+  console.log('post', post);
 
   return (
     <View style={styles.screen}>
@@ -65,23 +59,23 @@ const VideoPlayers = (props) => {
 
       <View style={styles.details}>
         <View style={styles.rightContainer}>
-          <View style={styles.profilePictureContainer}>
+          {/* <View style={styles.profilePictureContainer}>
             <Image
               style={styles.profilePicture}
               source={{
                 uri: post?.user?.imageUri,
               }}
             />
-          </View>
+          </View> */}
 
           <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
             <Entypo name="heart" color={isLiked ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
-            <Text style={styles.statsLabel}>{post?.likes}</Text>
+            <Text style={styles.statsLabel}>{post?.likesCount}</Text>
           </TouchableOpacity>
 
           <View style={styles.iconContainer}>
             <FontAwesome name="commenting" color={Colors.WHITE} size={IconSize.LARGE} />
-            <Text style={styles.statsLabel}>{post?.comments}</Text>
+            <Text style={styles.statsLabel}>{post?.commentCounts}</Text>
           </View>
 
           <View style={styles.iconContainer}>
@@ -91,24 +85,15 @@ const VideoPlayers = (props) => {
         </View>
 
         <View style={styles.bottomContainer}>
-          <View>
-            <Text style={styles.handle}>{`@${post.user.username}`}</Text>
-            <Text style={styles.description}>{post?.description}</Text>
-
-            <View style={styles.songRow}>
-              <Entypo name="beamed-note" size={IconSize.SMALL} color={Colors.WHITE} />
-              <Text style={styles.songName}>{post?.songName}</Text>
+           <View>
+             <TouchableOpacity onPress={() => navigation.navigate('OtherProfile')}>
+            <Text style={styles.handle}>{post?.creator}</Text>
+             </TouchableOpacity>
+            <Text style={styles.description}>{post?.detail}</Text>
             </View>
           </View>
-          <Image
-            style={styles.songImage}
-            source={{
-              uri: post?.songImage,
-            }}
-          />
         </View>
       </View>
-    </View>
   );
 };
 
