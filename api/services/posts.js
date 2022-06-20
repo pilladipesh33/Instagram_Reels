@@ -91,4 +91,31 @@ export const getLikeById = (postId, uid) => new Promise((resolve, reject) => {
     .doc(uid)
     .get()
     .then((res) => resolve(res.exists));
-})
+});
+
+export const fetchPost = async (creator,setPostFeed) => {
+    try {
+      const list = [];
+      await firebase
+        .firestore()
+        .collection('posts')
+        .where('creator', '==', creator)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const {creator, likeCount, media, description} =
+              doc.data();
+            list.push({
+              creator,
+              likeCount,
+              media,
+              description,
+            });
+            console.log('id', doc.id);
+          });
+        });
+      setPostFeed(list);
+    } catch (e) {
+      console.log(e);
+    }
+  };

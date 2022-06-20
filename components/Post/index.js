@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  Pressable,
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -79,8 +80,8 @@ const VideoPlayers = (props) => {
           </View>
 
           <TouchableOpacity style={styles.iconContainer} onPress={handleUpdateLike}>
-            <Entypo name="heart" color={currentLikeState.state ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
-            <Text style={styles.statsLabel}>{currentLikeState.counter}</Text>
+            <Entypo name="heart" color={currentLikeState.state ? Colors.WHITE : Colors.RED } size={IconSize.LARGE} />
+            <Text style={styles.statsLabel}>{post.likeCounts}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Comment', {creator: post.creator, docId: post.postId})}>
@@ -96,7 +97,9 @@ const VideoPlayers = (props) => {
 
         <View style={styles.bottomContainer}>
            <View>
+             <Pressable onPress={() => navigation.navigate('OtherProfile', {creator: post.creator, docId: post.postId})}>
              <Text style={styles.userDetailText}>{userPostDetail.FullName}</Text>
+             </Pressable>
             <Text style={styles.description}>{post?.description}</Text>
             </View>
           </View>
