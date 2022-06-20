@@ -60,6 +60,37 @@ const OtherProfile = ({route, navigation}) => {
         <Text style={styles.profileName}>{userDetail.FullName}</Text>
       </View>
 
+      <View style={styles.topRow}>
+        <Text style={[styles.detail, styles[`text_${theme}`]]}>114.2K</Text>
+        <Text style={[styles.detail, styles[`text_${theme}`]]}>1.6M</Text>
+      </View>
+      <View style={styles.topRow}>
+        <Text style={[styles[`text_${theme}`], {color: Colors.GREY}]}>
+          Followers
+        </Text>
+        <Text style={[styles[`text_${theme}`], {color: Colors.GREY}]}>
+          Likes
+        </Text>
+      </View>
+
+
+      <View style={styles.EditButtonContainer}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => {}}>
+          <Text style={styles.editText}>
+            Follow
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => {}}>
+          <Text style={styles.editText}>
+            Message
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <View>
         <View style={styles.line} />
         <View
@@ -138,5 +169,35 @@ const styles = StyleSheet.create({
     fontSize: FontSize.MEDIUM,
     marginBottom: 40,
     color: Colors.BLACK,
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+  },
+  detail: {
+    fontWeight: '700',
+    fontSize: FontSize.MEDIUM,
+    color: Colors.BLACK
+  },
+  editButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: Colors.GREY,
+  },
+  editText: {
+    fontSize: FontSize.SMALL,
+    fontWeight: '500',
+    color: Colors.BLACK,
+  },
+  EditButtonContainer: {
+    width: '70%',
+    alignItems: 'center',
+    marginTop: 20,
+    flexDirection: 'row',
+    marginLeft: 50,
+    justifyContent: 'space-around',
   },
 });
