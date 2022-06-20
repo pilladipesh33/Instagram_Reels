@@ -83,16 +83,12 @@ export const commentListener = (postId, setCommentList) => {
     })
 };
 
-export const fieldToIncrease = (postId) => {
-    const userRef = firebase.firestore('posts').doc(postId);
-    const increment =  firebase.firestore.FieldValue.increment(1);
-
-    userRef.update({commentCounts: increment});
-}
-
-export const fieldToDecrease = (postId) => {
-    const userRef = firebase.firestore('posts').doc(postId);
-    const decrease =  firebase.firestore.FieldValue.increment(-1);
-
-    userRef.update({commentCounts: decrease});
-}
+export const getLikeById = (postId, uid) => new Promise((resolve, reject) => {
+    firebase.firestore()
+    .collection('posts')
+    .doc(postId)
+    .collection('likes')
+    .doc(uid)
+    .get()
+    .then((res) => resolve(res.exists));
+})

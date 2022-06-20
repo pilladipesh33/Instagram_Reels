@@ -10,21 +10,21 @@ import {
   Image,
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
-
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Colors, IconSize, FontSize } from '../../constants/Theme';
 import { useNavigation } from '@react-navigation/native';
 import { getUserDetails } from '../../api/services/users';
+import { getLikeById } from '../../api/services/posts';
 
 const {height} = Dimensions.get('screen');
 
 const VideoPlayers = (props) => {
   const [isPaused, setisPaused] = useState(false);
   const [post, setPost] = useState(props?.post);
-  const [isLiked,  setisLiked] = useState(false);
   const [userPostDetail, setUserPostDetail] = useState('');
+  const [currentLikeState, setCurrentLikeState] = useState({state: true, counter: post.likeCounts})
 
   const navigation = useNavigation();
 
@@ -32,20 +32,23 @@ const VideoPlayers = (props) => {
     setisPaused(!isPaused);
   };
 
-  const onLikePress = () => {
-    const likesToAdd = isLiked ? -1 : 1;
-    setPost({
-      ...post,
-      likes: post.likes + likesToAdd,
-    });
-    setisLiked(!isLiked)
-  };
-
   useEffect(() => {
     getUserDetails(post.creator, setUserPostDetail);
+    getLikeById()
+    .then((res) =>{
+      setCurrentLikeState({
+        ...currentLikeState,
+        counter: res,
+      })
+    })
   }, []);
 
-  console.log('post', userPostDetail);
+  const handleUpdateLike = () => {
+    setCurrentLikeState({
+      state: !currentLikeState.state,
+      counter: currentLikeState.counter + (currentLikeState.state ? -1 : 1),
+    })
+  }
 
   return (
     <View style={styles.screen}>
@@ -75,9 +78,9 @@ const VideoPlayers = (props) => {
             />
           </View>
 
-          <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
-            <Entypo name="heart" color={isLiked ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
-            <Text style={styles.statsLabel}>{post?.likeCounts}</Text>
+          <TouchableOpacity style={styles.iconContainer} onPress={handleUpdateLike}>
+            <Entypo name="heart" color={currentLikeState.state ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
+            <Text style={styles.statsLabel}>{currentLikeState.counter}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Comment', {creator: post.creator, docId: post.postId})}>
