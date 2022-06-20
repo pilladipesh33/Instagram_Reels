@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {
   View,
@@ -6,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
 
@@ -14,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { Colors, IconSize, FontSize } from '../../constants/Theme';
 import { useNavigation } from '@react-navigation/native';
+import { getUserDetails } from '../../api/services/users';
 
 const {height} = Dimensions.get('screen');
 
@@ -21,6 +24,7 @@ const VideoPlayers = (props) => {
   const [isPaused, setisPaused] = useState(false);
   const [post, setPost] = useState(props?.post);
   const [isLiked,  setisLiked] = useState(false);
+  const [userPostDetail, setUserPostDetail] = useState('');
 
   const navigation = useNavigation();
 
@@ -37,8 +41,11 @@ const VideoPlayers = (props) => {
     setisLiked(!isLiked)
   };
 
+  useEffect(() => {
+    getUserDetails(post.creator, setUserPostDetail);
+  }, []);
 
-  console.log('post', post);
+  console.log('post', userPostDetail);
 
   return (
     <View style={styles.screen}>
@@ -59,14 +66,14 @@ const VideoPlayers = (props) => {
 
       <View style={styles.details}>
         <View style={styles.rightContainer}>
-          {/* <View style={styles.profilePictureContainer}>
+          <View style={styles.profilePictureContainer}>
             <Image
               style={styles.profilePicture}
               source={{
-                uri: post?.user?.imageUri,
+                uri: userPostDetail.Image,
               }}
             />
-          </View> */}
+          </View>
 
           <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
             <Entypo name="heart" color={isLiked ? Colors.RED : Colors.WHITE} size={IconSize.LARGE} />
@@ -86,6 +93,7 @@ const VideoPlayers = (props) => {
 
         <View style={styles.bottomContainer}>
            <View>
+             <Text style={styles.userDetailText}>{userPostDetail.FullName}</Text>
             <Text style={styles.description}>{post?.description}</Text>
             </View>
           </View>
@@ -182,4 +190,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 5,
   },
+  userDetailText: {
+    color: Colors.WHITE,
+    fontWeight: 'bold',
+    fontSize: FontSize.LARGE,
+  }
 });
