@@ -3,9 +3,8 @@ import {firebase} from '@react-native-firebase/firestore';
 export const getFeed = async(uid) => {
     try {
         return await firebase.firestore()
-        .collection('post')
-        .doc(uid)
-        .collection('postData')
+        .collection('posts')
+        .where('creator', '==', uid)
         .get()
         .then((res) => {
             const posts =  res.docs.map((value) => {
@@ -51,4 +50,49 @@ export const getOtherUserPost = (creator) => new Promise((resolve, reject) => {
         })
     }
     catch (error) {console.log(error);}
-})
+});
+
+export const addComment = (postId, creator, comment) => {
+    firebase.firestore()
+    .collection('posts')
+    .doc(postId)
+    .collection('comment')
+    .add({
+        creator: creator,
+        comment: comment,
+        creation: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+};
+
+export const commentListener = (postId, setCommentList) => {
+    firebase.firestore()
+    .collection('posts')
+    .doc(postId)
+    .collection('comment')
+    .orderBy('creation', 'desc')
+    .onSnapshot((snapshot) => {
+        if(snapshot.docChanges().length == 0){
+            return ;
+        }
+        let comments = snapshot.docs.map((value) => {
+            const id = value.id;
+            const data  = value.data();
+            return {id, ...data};
+        })
+        setCommentList(comments);
+    })
+};
+
+export const fieldToIncrease = (postId) => {
+    const userRef = firebase.firestore('posts').doc(postId);
+    const increment =  firebase.firestore.FieldValue.increment(1);
+
+    userRef.update({commentCounts: increment});
+}
+
+export const fieldToDecrease = (postId) => {
+    const userRef = firebase.firestore('posts').doc(postId);
+    const decrease =  firebase.firestore.FieldValue.increment(-1);
+
+    userRef.update({commentCounts: decrease});
+}

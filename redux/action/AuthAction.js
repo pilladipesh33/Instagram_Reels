@@ -81,7 +81,7 @@ export const forgotPassword = (email) => {
         });
 };
 
-export const registration = async (email, password, fullName, {navigation}) => {
+export const registration = async (email, password, fullName) => {
   try {
     const userData = await auth().createUserWithEmailAndPassword(
       email,
@@ -91,7 +91,6 @@ export const registration = async (email, password, fullName, {navigation}) => {
       FullName: fullName,
       Email: email,
     });
-    navigation.navigate('Login');
     ;
   } catch (error) {
     alert(error.message);

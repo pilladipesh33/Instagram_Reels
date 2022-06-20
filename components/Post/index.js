@@ -5,7 +5,6 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Text,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import VideoPlayer from 'react-native-video';
@@ -37,6 +36,7 @@ const VideoPlayers = (props) => {
     });
     setisLiked(!isLiked)
   };
+
 
   console.log('post', post);
 
@@ -73,10 +73,10 @@ const VideoPlayers = (props) => {
             <Text style={styles.statsLabel}>{post?.likeCounts}</Text>
           </TouchableOpacity>
 
-          <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Comment', {creator: post.creator, docId: post.postId})}>
             <FontAwesome name="commenting" color={Colors.WHITE} size={IconSize.LARGE} />
             <Text style={styles.statsLabel}>{post?.commentCounts}</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.iconContainer}>
             <Fontisto name="share-a" color={Colors.WHITE} size={IconSize.MEDIUM} />

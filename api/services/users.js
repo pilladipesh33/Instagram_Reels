@@ -23,17 +23,29 @@ export const queryUserByEmail = Email =>
     }
   });
 
-export const queryUserForDetail = async(uid) => {
-  return await firebase.firestore()
-  .collection('users')
-  .doc(uid)
-  .get()
-  .then(snapshot => {
+export const queryUserForDetail = async uid => {
+  return await firebase
+    .firestore()
+    .collection('users')
+    .doc(uid)
+    .get()
+    .then(snapshot => {
       // const doc = snapshot.data();
       // array.push(doc);
       // return array;
-      if (snapshot.exists){
+      if (snapshot.exists) {
         return snapshot.data();
       }
-  });
-  };
+    });
+};
+
+export const getUserDetails = async (uid, setUserDetail) => {
+  const snapshot = await firebase
+    .firestore()
+    .collection('users')
+    .doc(uid)
+    .get();
+  if (snapshot.exists) {
+    setUserDetail(snapshot.data());
+  }
+};

@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -30,8 +31,8 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.screen}>
       <KeyboardAvoidingView
-      behavior="position"
       enabled={enableShift}
+      behavior={Platform.OS === "android" ? "padding" : "height"}
       >
       <View style={styles.imageLogo}>
         <Image

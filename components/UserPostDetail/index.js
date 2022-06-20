@@ -10,7 +10,7 @@ const UserPostDetail = (props) => {
     <View style={styles.screen}>
       <VideoPlayer
             source={{
-              uri: post.item.media,
+              uri: post?.item?.media,
             }}
             onError={e => console.log(e)}
             resizeMode={'cover'}
@@ -29,15 +29,13 @@ const styles = StyleSheet.create({
   videoPlayer: {
     height: 400,
     width: 200,
-    borderWidth: 2
   },
   screen: {
     padding: 10,
-    borderWidth: 2
   },
   description: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   descriptionText: {
     fontSize: FontSize.MEDIUM,

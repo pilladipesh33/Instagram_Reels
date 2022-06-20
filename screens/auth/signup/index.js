@@ -4,6 +4,8 @@ import {
   Image,
   Pressable,
   KeyboardAvoidingView,
+  Alert,
+  Text
 } from 'react-native';
 import React, {useState} from 'react';
 import {registration} from '../../../redux/action/AuthAction';
@@ -11,19 +13,27 @@ import {Input} from '../../../components/Input';
 import {Colors, IconSize, Padding} from '../../../constants/Theme';
 import {Button} from '../../../components/Button';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SpinnerButton from 'react-native-spinner-button';
 
 const Signup = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enableShift, setenableShift] = React.useState(false);
-
-  const NavigateToLogin = () => {
-    navigation.navigate('Login');
-  };
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = () => {
-    registration(email, password, fullName, NavigateToLogin);
+    try {
+      registration(email, password, fullName)
+      .then(() => {
+        Alert.alert(
+          'New account is created',
+          'Kindly login again'
+        );
+      });
+    } catch (error) {
+      Alert.alert(error);
+    }
   };
 
   return (
@@ -116,6 +126,15 @@ const styles = StyleSheet.create({
   imageLogo: {
     alignItems: 'center',
     paddingBottom: Padding,
+  },
+  buttonText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'white'
+  },
+  buttonStyle: {
+    borderRadius: 10,
+    margin: 5
   },
 });
 
