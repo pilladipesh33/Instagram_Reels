@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  View
 } from 'react-native';
 
 export const Button = ({
@@ -37,9 +38,7 @@ export const SpinButton = ({onPress, title}) => {
     <TouchableOpacity
       style={styles.buttonWithSpinner}
       onPress={() => {
-        if (onPress) {
           setsubmitSpin(!submitSpin);
-        }
       }}>
       <Text style={styles.buttonText}>{title}</Text>
       {submitSpin ? (
@@ -68,12 +67,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonWithSpinner: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#B9345A',
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    borderRadius: 4,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: 200,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#666",
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: 20,

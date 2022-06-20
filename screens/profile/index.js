@@ -6,18 +6,19 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import React, {useContext, useState, useEffect} from 'react';
 import {FontSize, Colors, IconSize} from '../../constants/Theme';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {ThemeContext} from '../../context/Themes/index';
-import { useSelector } from 'react-redux';
-import { firebase } from '@react-native-firebase/firestore';
-import { getFeed } from '../../api/services/posts';
-import { FlatList } from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {firebase} from '@react-native-firebase/firestore';
+import {getFeed} from '../../api/services/posts';
+import {FlatList} from 'react-native-gesture-handler';
 import UserPostDetail from '../../components/UserPostDetail/index';
+import VideoPlayer from 'react-native-video';
 
 const Profile = ({navigation}) => {
   const {theme} = useContext(ThemeContext);
@@ -29,9 +30,10 @@ const Profile = ({navigation}) => {
   const navigateToEditProfile = () => {
     navigation.navigate('EditProfile');
   };
-  
+
   const getUser = async () => {
-    const currentUser = await firebase.firestore()
+    const currentUser = await firebase
+      .firestore()
       .collection('users')
       .doc(accessToken)
       .get()
@@ -43,20 +45,69 @@ const Profile = ({navigation}) => {
       });
   };
 
+  const fetchPost = async () => {
+    try {
+      const list = [];
+      await firebase
+        .firestore()
+        .collection('posts')
+        .where('creator', '==', accessToken)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            const {creator, likeCount, media, description} =
+              doc.data();
+            list.push({
+              creator,
+              likeCount,
+              media,
+              description,
+            });
+            console.log('id', doc.id);
+          });
+        });
+      setPostFeed(list);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     getUser();
-    getFeed(accessToken)
-    .then(setPostFeed);
+    fetchPost();
     navigation.addListener('focus', () => setLoading(!loading));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[navigation, loading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation, loading]);
 
-  console.log('post',userDetail);
+  console.log('post', postFeed);
+
+  const renderItem = ({item}) => {
+    console.log('item', item);
+    return (
+      <View style={styles.screen}>
+        <VideoPlayer
+          source={{
+            uri: item.media,
+          }}
+          onError={e => console.log(e)}
+          resizeMode={'cover'}
+          style={styles.videoPlayer}
+          repeat={true}
+          volume={0.0}
+        />
+        <View style={styles.description}>
+          <Text style={styles.descriptionText}>{item.description}</Text>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <ScrollView style={styles[`container_${theme}`]}>
       <View style={styles.header}>
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.Email}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>
+          {userDetail.Email}
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <Feather
             name="settings"
@@ -70,12 +121,14 @@ const Profile = ({navigation}) => {
         <Image
           source={{
             uri: userDetail
-            ? userDetail.Image
-            : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-        }}
+              ? userDetail.Image
+              : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+          }}
           style={styles.profilePicture}
         />
-        <Text style={[styles.name, styles[`text_${theme}`]]}>{userDetail.FullName}</Text>
+        <Text style={[styles.name, styles[`text_${theme}`]]}>
+          {userDetail.FullName}
+        </Text>
       </View>
 
       <View style={styles.topRow}>
@@ -125,11 +178,7 @@ const Profile = ({navigation}) => {
         <View style={styles.line} />
       </View>
       <View>
-        <FlatList
-        data={postFeed}
-        renderItem={(item) => <UserPostDetail detail={item}/>} 
-        horizontal
-        />
+        <FlatList data={postFeed} renderItem={renderItem} horizontal />
       </View>
     </ScrollView>
   );
@@ -214,8 +263,20 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     marginTop: 15,
   },
-  videoPlayer:{
-    height: 200,
-    width: 100,
-  }
+  videoPlayer: {
+    height: 400,
+    width: 200,
+  },
+  screen: {
+    padding: 10,
+  },
+  description: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  descriptionText: {
+    fontSize: FontSize.MEDIUM,
+    marginBottom: 40,
+    color: Colors.BLACK,
+  },
 });
